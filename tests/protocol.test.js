@@ -1,6 +1,6 @@
 const { 
     createBlock, sendTransaction, generateHash, getNonce, provider, callContract
-} = require("../utils.js");
+} = require("../utils/index.js");
 
 var contractAddress = "";
 
