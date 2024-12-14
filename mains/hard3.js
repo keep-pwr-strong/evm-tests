@@ -19,7 +19,7 @@ class MultiWalletTPSTest {
 
     async runTPSTest() {
         console.log("Starting test preparation...");
-        const testBatchSize = 400;
+        const testBatchSize = 5000;
         const transactions = [];
 
         // Prepare transactions first
@@ -110,7 +110,7 @@ class MultiWalletTPSTest {
 // Test function
 async function runConcurrentTest() {
     console.log("Starting concurrent TPS test...");
-    const test = new MultiWalletTPSTest(400);
+    const test = new MultiWalletTPSTest(5000);
     await test.runTPSTest();
 }
 

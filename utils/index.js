@@ -1,15 +1,20 @@
 const axios = require("axios");
 const { ethers } = require("ethers");
+const http = require('http');
 require('dotenv').config();
 
+const RPC_API = process.env.RPC_API;
+
 const client = axios.create({
-    baseURL: process.env.RPC_API,
+    baseURL: RPC_API,
     headers: {
         'Content-Type': 'application/json'
-    }
+    },
+    timeout: 60000,
+    httpAgent: new http.Agent({ keepAlive: true, maxSockets: 100 }),
 });
 
-const provider = new ethers.JsonRpcProvider(process.env.RPC_API);
+const provider = new ethers.JsonRpcProvider(RPC_API);
 
 async function sendTransaction(params) {
     const request = {

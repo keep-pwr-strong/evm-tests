@@ -105,7 +105,7 @@ class WalletFunder {
 // Example usage
 async function fundAllWallets() {
     const fromAddress = "0x55D9BBeafdee6656F5E99a1e24bB6b8d4E81dB67";
-    const funder = new WalletFunder(fromAddress, 100); // Process 50 wallets per batch
+    const funder = new WalletFunder(fromAddress, 500); // Process 50 wallets per batch
     
     // Fund each wallet with 1 ETH (can be modified by passing different amount)
     await funder.fundWallets();
