@@ -125,15 +125,16 @@ describe('ETH Transaction Tests', () => {
 		nonce = `0x${nonce.toString(16)}`;
 		const newHash = generateHash();
 
+		console.log("newHash3: ", newHash);
+
 		const txParams = {
 			from: fromAddress, 
 			nonce: nonce, 
             newHash: newHash, 
-			data: "0x608060405234801561001057600080fd5b50610267806100206000396000f3fe608060405234801561001057600080fd5b50600436106100365760003560e01c806340caae061461003b5780638da5cb5b14610045575b600080fd5b610043610063565b005b61004d610134565b60405161005a9190610199565b60405180910390f35b600073ffffffffffffffffffffffffffffffffffffffff1660008054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16146100f2576040517f08c379a00000000000000000000000000000000000000000000000000000000081526004016100e990610211565b60405180910390fd5b336000806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff160217905550565b60008054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b600073ffffffffffffffffffffffffffffffffffffffff82169050919050565b600061018382610158565b9050919050565b61019381610178565b82525050565b60006020820190506101ae600083018461018a565b92915050565b600082825260208201905092915050565b7f4f776e6572206164647265737320616c72656164792073657400000000000000600082015250565b60006101fb6019836101b4565b9150610206826101c5565b602082019050919050565b6000602082019050818103600083015261022a816101ee565b905091905056fea2646970667358221220e0c8d317df37047957e770941d17c53e5bf32da0cc320a0226b5ee7fa7a37c9d64736f6c63430008130033",
+			data: "0x6080604052348015600e575f5ffd5b506102598061001c5f395ff3fe608060405234801561000f575f5ffd5b5060043610610034575f3560e01c806340caae06146100385780638da5cb5b14610042575b5f5ffd5b610040610060565b005b61004a61012f565b6040516100579190610192565b60405180910390f35b5f73ffffffffffffffffffffffffffffffffffffffff165f5f9054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16146100ee576040517f08c379a00000000000000000000000000000000000000000000000000000000081526004016100e590610205565b60405180910390fd5b335f5f6101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff160217905550565b5f5f9054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b5f73ffffffffffffffffffffffffffffffffffffffff82169050919050565b5f61017c82610153565b9050919050565b61018c81610172565b82525050565b5f6020820190506101a55f830184610183565b92915050565b5f82825260208201905092915050565b7f4f776e6572206164647265737320616c726561647920736574000000000000005f82015250565b5f6101ef6019836101ab565b91506101fa826101bb565b602082019050919050565b5f6020820190508181035f83015261021c816101e3565b905091905056fea2646970667358221220bef73e5302218a3386dc7487c3153383923ac88fbff768608b08afe044f48c4264736f6c634300081c0033",
 		};
 
 		const response = await sendTransaction(txParams);
-        console.log(response)
 	
 		expect(response).toHaveProperty('jsonrpc', '2.0');
 		expect(response).toHaveProperty('id', 1);
@@ -166,6 +167,8 @@ describe('ETH Transaction Tests', () => {
 		nonce = `0x${nonce.toString(16)}`;
 		const newHash = generateHash();
 
+		console.log("newHash4: ", newHash);
+
 		const txParams = {
 			from: fromAddress,
 			to: contractAddress,
@@ -175,7 +178,6 @@ describe('ETH Transaction Tests', () => {
 		};
 
 		const response = await sendTransaction(txParams);
-        console.log(response)
 	
 		expect(response).toHaveProperty('jsonrpc', '2.0');
 		expect(response).toHaveProperty('id', 1);
@@ -213,6 +215,8 @@ describe('ETH Transaction Tests', () => {
 		nonce = `0x${nonce.toString(16)}`;
 		const newHash = generateHash();
 
+		console.log("newHash5: ", newHash);
+
 		const txParams = {
 			from: fromAddress,
 			to: contractAddress,
@@ -222,7 +226,6 @@ describe('ETH Transaction Tests', () => {
 		};
 
 		const response = await sendTransaction(txParams);
-        console.log(response)
 	
 		expect(response).toHaveProperty('jsonrpc', '2.0');
 		expect(response).toHaveProperty('id', 1);
