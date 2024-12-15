@@ -58,7 +58,7 @@ class HighTPSTest {
                 const batchPromise = this.sendParallelBatch(currentNonce, currentBatchSize);
                 
                 // Create new block immediately after sending transactions
-                const blockPromise = createBlock();
+                const blockPromise = await createBlock();
                 
                 // Wait for both transactions and block creation
                 const [txResults] = await Promise.all([batchPromise, blockPromise]);
@@ -84,6 +84,7 @@ class HighTPSTest {
             console.error("Test failed:", error);
         }
         
+        await createBlock();
         this.results.endTime = Date.now();
         this.printResults();
     }

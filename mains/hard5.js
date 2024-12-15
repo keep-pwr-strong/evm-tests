@@ -1,6 +1,8 @@
 const { generateHash, getNonce, createBlock, sendTransaction } = require('../utils/index.js');
 const fs = require('fs');
 
+const num = 100;
+
 class MultiWalletTPSTest {
     constructor(targetTPS) {
         console.log("Initializing test...");
@@ -19,18 +21,18 @@ class MultiWalletTPSTest {
 
     async runTPSTest() {
         console.log("Starting test preparation...");
-        const testBatchSize = 10000;
+        const batchSize = 1000; // Send 1000 transactions per batch
+        const totalTransactions = num;
         const transactions = [];
 
-        // Prepare transactions first
         console.log("Preparing test transactions...");
-        for (let i = 0; i < testBatchSize; i++) {
+        for (let i = 0; i < totalTransactions; i++) {
             const fromWallet = this.wallets[i];
             const toWallet = this.wallets[(i + 1) % this.wallets.length];
             
             try {
                 const nonce = await getNonce(fromWallet.address);
-                console.log(`${i} - Got nonce for ${fromWallet.address}: ${nonce}`);
+                console.log(`${i+1} - Got nonce for ${fromWallet.address}: ${nonce}`);
                 
                 const txParams = {
                     from: fromWallet.address,
@@ -47,14 +49,17 @@ class MultiWalletTPSTest {
             }
         }
 
-        console.log(`Prepared ${transactions.length} transactions. Starting concurrent send...`);
+        console.log(`Prepared ${transactions.length} transactions. Starting batch sending...`);
 
         // Record start time
         this.results.startTime = Date.now();
 
-        // Send all transactions concurrently
-        try {
-            const promises = transactions.map(tx => {
+        // Send transactions in batches
+        for (let i = 0; i < transactions.length; i += batchSize) {
+            const batch = transactions.slice(i, i + batchSize);
+            console.log(`Sending batch ${i / batchSize + 1}: ${batch.length} transactions`);
+
+            const promises = batch.map(tx => {
                 return sendTransaction(tx)
                     .then(result => {
                         if (result.error) {
@@ -62,7 +67,7 @@ class MultiWalletTPSTest {
                             this.results.failed++;
                             this.results.errors.push(result.error);
                         } else {
-                            console.log(`Transaction successful from ${tx.from}`);
+                            // console.log(`Transaction successful from ${tx.from}`);
                             this.results.successful++;
                         }
                         return result;
@@ -74,10 +79,7 @@ class MultiWalletTPSTest {
                     });
             });
 
-            // Wait for all transactions to complete
             await Promise.all(promises);
-        } catch (error) {
-            console.error("Error in concurrent execution:", error);
         }
 
         // Record end time and calculate actual TPS
@@ -110,7 +112,7 @@ class MultiWalletTPSTest {
 // Test function
 async function runConcurrentTest() {
     console.log("Starting concurrent TPS test...");
-    const test = new MultiWalletTPSTest(10000);
+    const test = new MultiWalletTPSTest(num);
     await test.runTPSTest();
 }
 
