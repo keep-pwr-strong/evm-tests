@@ -1,8 +1,8 @@
 const { generateHash, getNonce, createBlock, sendTransaction } = require('../utils/index.js');
 const fs = require('fs');
 
-const tps = 10000;
-const filePath = './wallets.json';
+const tps = process.argv[2];
+const filePath = `./${process.argv[3]}.json`;
 
 class MultiWalletTPSTest {
     constructor(targetTPS) {

@@ -11,7 +11,7 @@ const client = axios.create({
         'Content-Type': 'application/json'
     },
     timeout: 60000,
-    httpAgent: new http.Agent({ keepAlive: true, maxSockets: 100 }),
+    httpAgent: new http.Agent({ keepAlive: true, maxSockets: 200 }),
 });
 
 const provider = new ethers.JsonRpcProvider(RPC_API);

@@ -2,6 +2,8 @@ const fs = require('fs');
 const { generateHash, getNonce, createBlock, sendTransaction } = require('../utils/index.js');
 const { ethers } = require("ethers");
 
+const filePath = `./${process.argv[2]}.json`;
+
 class WalletFunder {
     constructor(fromAddress, batchSize = 50) {
         this.fromAddress = fromAddress;
@@ -16,7 +18,7 @@ class WalletFunder {
     async fundWallets(amount = "0xde0b6b3a7640000") { // 1 ETH in hex
         try {
             // Read wallets from JSON file
-            const wallets = JSON.parse(fs.readFileSync('./wallets.json', 'utf8'));
+            const wallets = JSON.parse(fs.readFileSync(filePath, 'utf8'));
             console.log(`Found ${wallets.length} wallets to fund`);
 
             let currentNonce = await getNonce(this.fromAddress);
@@ -104,8 +106,8 @@ class WalletFunder {
 
 // Example usage
 async function fundAllWallets() {
-    const fromAddress = "0x55D9BBeafdee6656F5E99a1e24bB6b8d4E81dB67";
-    const funder = new WalletFunder(fromAddress, 500); // Process 50 wallets per batch
+    const fromAddress = "0xde947e6cbFa6afE576db33b2A281EbD8671Cd8d5";
+    const funder = new WalletFunder(fromAddress, 2000); // Process 50 wallets per batch
     
     // Fund each wallet with 1 ETH (can be modified by passing different amount)
     await funder.fundWallets();
